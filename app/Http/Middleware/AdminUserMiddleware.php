@@ -19,6 +19,6 @@ class AdminUserMiddleware
         if(auth()->user()->role_id == 1 || auth()->user()->role_id == 3){
             return $next($request);
         }
-        return $next($request);
+        return response()->json(['message' => 'Unauthorized'], 403);
     }
 }

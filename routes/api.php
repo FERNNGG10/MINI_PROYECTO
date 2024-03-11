@@ -56,7 +56,7 @@ Route::middleware('auth:api')->prefix('users')->group(function(){
 Route::middleware('auth:api')->prefix('games')->group(function(){
     Route::middleware('admin.guest')->get('index',[GameController::class,'index']);
     Route::middleware('admin')->post('store',[GameController::class,'store']);
-    Route::get('show/{id}',[GameController::class,'show'])->where('id','[0-9]+');
+    Route::middleware('admin.guest')->get('show/{id}',[GameController::class,'show'])->where('id','[0-9]+');
     Route::middleware('admin')->put('update/{id}',[GameController::class,'update'])->where('id','[0-9]+');
     Route::middleware('admin')->delete('destroy/{id}',[GameController::class,'destroy'])->where('id','[0-9]+');
 });
@@ -65,7 +65,7 @@ Route::middleware('auth:api')->prefix('games')->group(function(){
 Route::middleware('auth:api')->prefix('consoles')->group(function(){
     Route::middleware('admin.guest')->get('index',[ConsoleController::class,'index']);
     Route::middleware('admin')->post('store',[ConsoleController::class,'store']);
-    Route::get('show/{id}',[ConsoleController::class,'show'])->where('id','[0-9]+');
+    Route::middleware('admin.guest')->get('show/{id}',[ConsoleController::class,'show'])->where('id','[0-9]+');
     Route::middleware('admin')->put('update/{id}',[ConsoleController::class,'update'])->where('id','[0-9]+');
     Route::middleware('admin')->delete('destroy/{id}',[ConsoleController::class,'destroy'])->where('id','[0-9]+');
 });
@@ -79,6 +79,7 @@ Route::middleware('auth:api')->prefix('categories')->group(function(){
     Route::middleware('admin')->delete('destroy/{id}',[CategoryController::class,'destroy'])->where('id','[0-9]+');
 
 });
+
 
 Route::middleware('auth:api')->prefix('suppliers')->group(function(){
     Route::middleware('admin.guest')->get('index',[SupplierController::class,'index']);

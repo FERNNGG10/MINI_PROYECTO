@@ -11,6 +11,7 @@ class GameController extends Controller
 {
     public function index(){
         $games = Game::with(['category','suppliers','gameInventory'])->get();
+        
         return response()->json(["games"=>$games],200);
     }
 
