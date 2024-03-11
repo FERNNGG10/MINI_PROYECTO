@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class AdminGuestMiddleware
+class AGUMiddleware
 {
     /**
      * Handle an incoming request.
@@ -16,10 +16,6 @@ class AdminGuestMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if(auth()->user()->role_id == 2 || auth()->user()->role_id == 1){
-            return $next($request);
-        }
-        return response()->json(['message' => 'Unauthorized'], 403);
-        
+        return $next($request);
     }
 }
