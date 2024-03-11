@@ -163,4 +163,27 @@ class AuthController extends Controller
         return false;
     }
 
+    public function is_admin(){
+        if(auth()->user()->role_id == 1){
+            return true;
+        }
+        return false;
+    }
+
+    public function is_admin_guest(){
+        if(auth()->user()->role_id == 2 || auth()->user()->role_id == 2){
+            return true;
+        }
+        return false;
+    }
+
+    public function is_admin_user(){
+        if(auth()->user()->role_id == 3 || auth()->user()->role_id == 1){
+            return true;
+        }
+        return false;
+    }
+
+    
+
 }
