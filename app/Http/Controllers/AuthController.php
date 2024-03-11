@@ -87,7 +87,7 @@ class AuthController extends Controller
             else{
                 $code = Crypt::decrypt($user->code);
                 Mail::to($user->email)->send(new LoginCode($code));
-                return response()->json("Insert Code, Check Your Email",200);
+                return response()->json(["msg"=>"Insert Code, Check Your Email"],200);
             }
         }
     }
