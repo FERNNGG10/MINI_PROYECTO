@@ -143,17 +143,15 @@ class AuthController extends Controller
     public function verify_code(Request $request,User $user){
       
         $codei = $request->input('code');
-        if($user->code == null){
+        $code = Crypt::decrypt($user->code);
+        if($code == $codei ){
+            $new_code = Crypt::encrypt(rand(100000,999999));
+            $user->code = $new_code;
+            $user->save();
             return true;
-        }else{
-            $code = Crypt::decrypt($user->code);
-            if($code == $codei ){
-                $user->code = null;
-                $user->save();
-                return true;
-            }
-            return false;
         }
+        return false;
+        
         
     }
 
