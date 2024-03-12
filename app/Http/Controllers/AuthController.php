@@ -35,7 +35,7 @@ class AuthController extends Controller
         ]);
         if($validate->fails()){
             return response()->json([
-                "Errorr"=>$validate->errors()
+                "Errors"=>$validate->errors()
             ],422);
         }
         $code = Crypt::encrypt(rand(100000,999999));
@@ -77,14 +77,20 @@ class AuthController extends Controller
     {   
         $credentials = request(['email', 'password']);
         $user = User::where('email',request('email'))->first();
+       
         if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json('Unauthorized', 401);
         }
         else{
-            if($this->verify_code($request,$user)){
-                return $this->respondWithToken($token);
+            if($request->has('code')) {
+                if($this->verify_code($request,$user)){
+                    return $this->respondWithToken($token);
+                }
+                else{
+                    return response()->json("Incorrect Code",401);
+                }
             }
-            else{
+            else {
                 $code = Crypt::decrypt($user->code);
                 Mail::to($user->email)->send(new LoginCode($code));
                 return response()->json(["msg"=>"Insert Code, Check Your Email"],200);
