@@ -24,7 +24,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login','register','activate']]);
+        $this->middleware('auth:api', ['except' => ['login','register','activate','is_auth']]);
     }
     public function register(Request $request){
 
@@ -163,10 +163,13 @@ class AuthController extends Controller
 
     public function is_auth(){
        
-        if(auth()){
-            return true;
+        if(auth()->user()){
+            return response()->json(true);
         }
-        return false;
+        else{
+            return response()->json(false,401);
+        }
+        
     }
 
     public function is_admin(){
