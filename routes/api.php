@@ -42,10 +42,7 @@ Route::group([
     Route::post('refresh', [AuthController::class,'refresh']);
     Route::get('me', [AuthController::class,'me']);
     Route::get('activate/{user}',[AuthController::class,'activate'])->name('activate')->middleware('signed');
-    Route::get('auth',[AuthController::class,'is_auth']);
-    Route::get('isadmin',[AuthController::class,'is_admin']);
-    Route::get('isadminguest',[AuthController::class,'is_admin_guest']);
-    Route::get('isadminuser',[AuthController::class,'is_admin_user']);
+    Route::get('verifytoken',[AuthController::class,'verifytoken']);
 });
 
 Route::middleware('auth:api')->prefix('users')->group(function(){

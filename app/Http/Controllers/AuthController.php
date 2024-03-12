@@ -9,11 +9,13 @@ use App\Mail\LoginCode;
 use App\Mail\RegisterActivate;
 use App\Models\User;
 use App\Rules\Email;
+use Exception;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
+use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
@@ -24,7 +26,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login','register','activate','is_auth']]);
+        $this->middleware('auth:api', ['except' => ['login','register','activate']]);
     }
     public function register(Request $request){
 
@@ -158,41 +160,16 @@ class AuthController extends Controller
         }
         return false;
         
-        
+    }
+    public function verifyToken()
+    {
+        try {
+            return response()->json(['status' => 'success'], 200);
+        } catch (Exception $e) {
+            return response()->json(['status' => 'token_invalid'], 401);
+        }
     }
 
-    public function is_auth(){
-       
-        if(auth()->user()){
-            return response()->json(true);
-        }
-        else{
-            return response()->json(false,401);
-        }
-        
-    }
 
-    public function is_admin(){
-        if(auth()->user()->role_id == 1){
-            return true;
-        }
-        return false;
-    }
-
-    public function is_admin_guest(){
-        if(auth()->user()->role_id == 2 || auth()->user()->role_id == 2){
-            return true;
-        }
-        return false;
-    }
-
-    public function is_admin_user(){
-        if(auth()->user()->role_id == 3 || auth()->user()->role_id == 1){
-            return true;
-        }
-        return false;
-    }
-
-    
 
 }
