@@ -12,7 +12,7 @@ class SaleGameController extends Controller
 {
     public function index()
     {
-        $users = User::with('purchasedGames')->get();
+        $users = Game_Sale::with('user','game')->get();
         return response()->json(["data"=>$users],200);
     }
 

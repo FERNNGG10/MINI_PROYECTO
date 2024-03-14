@@ -12,7 +12,7 @@ class OrderGameController extends Controller
 {
     public function index()
     {
-        $users = User::with('orderedGames')->get();
+        $users = Order_Game::with('user','game')->get();
         return response()->json(["data"=>$users],200);
         
     }

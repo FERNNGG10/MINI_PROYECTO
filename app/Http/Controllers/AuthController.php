@@ -164,9 +164,9 @@ class AuthController extends Controller
     public function verifyToken()
     {
         try {
-            return response()->json(['status' => 'success'], 200);
+            return response()->json(['msg' => 'success'], 200);
         } catch (Exception $e) {
-            return response()->json(['status' => 'token_invalid'], 401);
+            return response()->json(['msg' => 'token_invalid'], 401);
         }
     }
 

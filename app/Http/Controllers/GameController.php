@@ -22,7 +22,7 @@ class GameController extends Controller
             'category_id'   =>  'required|numeric|exists:categories,id',
             'stock'=> 'required|numeric',
             'price'=> 'required|numeric',
-            'supplier_id'=> 'required|numeric|exists:suppliers,id'
+
 
         ]);
         if($validate->fails()){
@@ -68,7 +68,6 @@ class GameController extends Controller
                 'category_id'   =>  'required|numeric|exists:categories,id',
                 'stock'=> 'required|numeric',
                 'price'=> 'required|numeric',
-                'supplier_id'=> 'required|numeric|exists:suppliers,id'
             ]);
             if($validate->fails()){
                 return response()->json([
@@ -85,8 +84,6 @@ class GameController extends Controller
                 'stock' =>  $request->stock,
                 'price' =>  $request->price
             ]);
-        
-            $game->suppliers()->sync([$request->supplier_id]);
 
             return response()->json([
                 'msg'   =>  "Game updated succesfully",

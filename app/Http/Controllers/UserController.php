@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\URL;
 use App\Mail\RegisterActivate;
+use App\Models\Role;
 use Illuminate\Support\Facades\Mail;
 use App\Rules\Email;
 use Illuminate\Validation\Rule;
@@ -29,7 +30,7 @@ class UserController extends Controller
         ]);
         if($validate->fails()){
             return response()->json([
-                "Errorr"=>$validate->errors()
+                "Error"=>$validate->errors()
             ],422);
         }
         $code = Crypt::encrypt(rand(100000,999999));
@@ -80,7 +81,7 @@ class UserController extends Controller
         $validate = Validator::make($request->all(),[
             'name'  =>  'required',
             'email' =>  ['required','email',Rule::unique('users')->ignore($user->id),new Email],
-            'password'  =>  'required|confirmed|min:8',
+            'password'  =>  'sometimes|confirmed|min:8',
             'role_id'   =>  'required|numeric|between:1,3'
         ]);
         if($validate->fails()){
@@ -107,6 +108,11 @@ class UserController extends Controller
         }
         $user->status=false;
         return response()->json(["msg"=>"User deleted succesfully"],200);
+    }
+
+    public function roles(){
+        $roles = Role::all();
+        return response()->json(["roles"=>$roles],200);
     }
    
 }

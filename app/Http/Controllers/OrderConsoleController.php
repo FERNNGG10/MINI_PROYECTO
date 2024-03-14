@@ -12,7 +12,7 @@ class OrderConsoleController extends Controller
 {
     public function index()
     {
-        $users = User::with('orderedConsoles')->get();
+        $users = Order_Console::with('user','console')->get();
         return response()->json(["data"=>$users],200);
     }
 
@@ -34,7 +34,7 @@ class OrderConsoleController extends Controller
         $invetory->increment('stock',$request->quantity);
         return response()->json(["message"=>"Console ordered successfully","Order"=>$order_console],201);
     }
-
+    
     public function show(int $id)
     {
         $order_console = Order_Console::find($id);

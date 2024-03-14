@@ -12,7 +12,7 @@ class SaleConsoleController extends Controller
 {
     public function index()
     {
-        $users = User::with('purchasedConsoles')->get();
+        $users = Console_Sale::with('user','console')->get();
         return response()->json(["data"=>$users],200);
     }
 
@@ -35,7 +35,6 @@ class SaleConsoleController extends Controller
             'quantity' => $request->quantity,
             'total' => $total
         ]);
-        
         $invetory->decrement('stock',$request->quantity);
         return response()->json(["message"=>"Console purchased successfully","Sale"=>$sale_console],201);
     }

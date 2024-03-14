@@ -63,7 +63,7 @@ class ConsoleController extends Controller
             'maker' =>  'required',
             'stock'=> 'required|numeric',
             'price'=> 'required|numeric',
-            'supplier_id'=> 'required|numeric|exists:suppliers,id'
+
         ]);
         if($validate->fails()){
             return response()->json([
@@ -80,7 +80,6 @@ class ConsoleController extends Controller
                 'stock' =>  $request->stock,
                 'price' =>  $request->price
             ]);
-            $console->suppliers()->sync([ $request->supplier_id]);
 
             return response()->json([
                 'msg'   =>  "Console updated succesfully",

@@ -51,6 +51,7 @@ Route::middleware('auth:api')->prefix('users')->group(function(){
     Route::middleware('admin')->get('show/{id}',[UserController::class,'show'])->where('id','[0-9]+');
     Route::middleware('admin')->put('update/{id}',[UserController::class,'update'])->where('id','[0-9]+');
     Route::middleware('admin')->delete('destroy/{id}',[UserController::class,'destroy'])->where('id','[0-9]+');
+    Route::middleware('admin')->get('role',[UserController::class,'roles']);
 });
 
 Route::middleware('auth:api')->prefix('games')->group(function(){
@@ -83,9 +84,9 @@ Route::middleware('auth:api')->prefix('categories')->group(function(){
 
 Route::middleware('auth:api')->prefix('suppliers')->group(function(){
     Route::middleware('admin.guest')->get('index',[SupplierController::class,'index']);
-    Route::middleware('admin')->post('store',[SupplierController::class,'store']);
+    Route::middleware('admin.user')->post('store',[SupplierController::class,'store']);
     Route::middleware('admin.guest')->get('show/{id}',[SupplierController::class,'show'])->where('id','[0-9]+');
-    Route::middleware('admin')->put('update/{id}',[SupplierController::class,'update'])->where('id','[0-9]+');
+    Route::middleware('admin.user')->put('update/{id}',[SupplierController::class,'update'])->where('id','[0-9]+');
     Route::middleware('admin')->delete('destroy/{id}',[SupplierController::class,'destroy'])->where('id','[0-9]+');
 });
 

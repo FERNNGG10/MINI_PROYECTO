@@ -25,7 +25,7 @@ class UserSeeder extends Seeder
             'status' => true,
             'code'  => Crypt::encrypt(rand(100000,999999))
 
-        ]);/*
+        ]);
         DB::table('users')->insert([
             'name' => 'Fernando2',
             'email' => 'fernando@gmail.com',
@@ -43,7 +43,7 @@ class UserSeeder extends Seeder
             'status' => true,
             'code'  => Crypt::encrypt(rand(100000,999999))
 
-        ]);*/
+        ]);
 
         
 
